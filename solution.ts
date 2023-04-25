@@ -1,22 +1,21 @@
-class MaxHeap {
-    heap: [number, number][];
-    constructor() {
-        this.heap = [];
+shiftUp(i: number) {
+        while (i > 0 && this.heap[this.parent(i)][1] < this.heap[i][1]) {
+            this.swap(i, this.parent(i));
+            i = this.parent(i);
+        }
     }
 
-    swap(i: number, j: number) {
-        [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]];
+    shiftDown(i: number) {
+        while (
+            this.left(i) < this.heap.length &&
+            (this.heap[i][1] < this.heap[this.left(i)][1] ||
+                (this.right(i) < this.heap.length && this.heap[i][1] < this.heap[this.right(i)][1]))
+        ) {
+            let tmp = this.left(i);
+            if (this.right(i) < this.heap.length && this.heap[tmp][1] < this.heap[this.right(i)][1]) {
+                tmp = this.right(i);
+            }
+            this.swap(i, tmp);
+            i = tmp;
+        }
     }
-
-    parent(i: number): number {
-        return (i - 1) >> 1;
-    }
-
-    left(i: number): number {
-        return 2 * i + 1;
-    }
-
-    right(i: number): number {
-        return 2 * i + 2;
-    }
-}
